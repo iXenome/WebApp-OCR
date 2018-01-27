@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Image ID="MyImage" runat="server" Height="500px" ImageAlign="Middle" Width="500px" />
     <br />
-    <asp:TextBox ID="MyTextBox" runat="server" Width="500px" Height="500px" TextMode="MultiLine"></asp:TextBox>
+    <asp:TextBox ID="MyTextBox" runat="server" Width="1000px" Height="500px" TextMode="MultiLine"></asp:TextBox>
     <br />
     <asp:FileUpload ID="ImageUpload" runat="server" />
     <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" />

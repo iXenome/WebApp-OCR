@@ -22,10 +22,17 @@ namespace ComputerVisonWebApp
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            string fileName = ImageUpload.FileName;
-            MyImage.ImageUrl = "~/images/" + fileName;
-            ImageUpload.SaveAs(Server.MapPath("~/images/" + fileName));
-            MakeOCRRequest(Server.MapPath("~/images/" + fileName));
+            if (ImageUpload.HasFile)
+            {
+                string fileName = ImageUpload.FileName;
+                MyImage.ImageUrl = "~/images/" + fileName;
+                ImageUpload.SaveAs(Server.MapPath("~/images/" + fileName));
+                MakeOCRRequest(Server.MapPath("~/images/" + fileName));
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "ClientScript", "alert('Image is required!')", true);
+            }
         }
 
         async void MakeOCRRequest(string imageFilePath)
