@@ -15,6 +15,8 @@ namespace ComputerVisonWebApp
     {
         const string subscriptionKey = "6640d38c6e564b93b42e778e72f8cda9";
         const string uriBase = "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/ocr";
+        string fileName;
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -24,7 +26,7 @@ namespace ComputerVisonWebApp
         {
             if (ImageUpload.HasFile)
             {
-                string fileName = ImageUpload.FileName;
+                fileName = ImageUpload.FileName;
                 MyImage.ImageUrl = "~/images/" + fileName;
                 ImageUpload.SaveAs(Server.MapPath("~/images/" + fileName));
                 MakeOCRRequest(Server.MapPath("~/images/" + fileName));
@@ -69,7 +71,8 @@ namespace ComputerVisonWebApp
                 Console.WriteLine("\nResponse:\n");
                 Console.WriteLine(JsonPrettyPrint(contentString));
                 MyTextBox.Text = JsonPrettyPrint(contentString);
-                File.WriteAllText(@"D:\Aidil Irfan\Pictures\Saved Pictures\Computer Vision\test.txt", JsonPrettyPrint(contentString));
+                string textFilePath = Path.ChangeExtension(Server.MapPath(@"~/images/") + fileName, ".txt");
+                File.WriteAllText(textFilePath, JsonPrettyPrint(contentString));
             }
         }
 
