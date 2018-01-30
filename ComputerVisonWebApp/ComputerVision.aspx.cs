@@ -68,8 +68,6 @@ namespace ComputerVisonWebApp
                 string contentString = await response.Content.ReadAsStringAsync();
 
                 // Display the JSON response.
-                Console.WriteLine("\nResponse:\n");
-                Console.WriteLine(JsonPrettyPrint(contentString));
                 MyTextBox.Text = JsonPrettyPrint(contentString);
                 string textFilePath = Path.ChangeExtension(Server.MapPath(@"~/images/") + fileName, ".txt");
                 File.WriteAllText(textFilePath, JsonPrettyPrint(contentString));
