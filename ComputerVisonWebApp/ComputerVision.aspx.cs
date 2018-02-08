@@ -99,9 +99,13 @@ namespace ComputerVisonWebApp
 
                 // Display the JSON response.
                 MyTextBox.Text = JsonPrettyPrint(contentString);
+
+                //Save JSON response to a text file with the same name as the image
                 string textFilePath = Path.ChangeExtension(Server.MapPath(@"~/images/") + fileName, ".txt");
-                string textFilePath1 = Server.MapPath(@"~/images/") + Path.GetFileNameWithoutExtension(textFilePath) + "text.txt";
                 File.WriteAllText(textFilePath, JsonPrettyPrint(contentString));
+
+                //Save JSON response (text only) to a text file with the same name as the image
+                string textFilePath1 = Server.MapPath(@"~/images/") + Path.GetFileNameWithoutExtension(textFilePath) + "text.txt";
                 getTextOnly(textFilePath, textFilePath1);
             }
         }
