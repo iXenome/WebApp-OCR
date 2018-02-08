@@ -8,6 +8,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace ComputerVisonWebApp
 {
@@ -34,6 +36,34 @@ namespace ComputerVisonWebApp
             else
             {
                 ScriptManager.RegisterClientScriptBlock(Page, typeof(Page), "ClientScript", "alert('Image is required!')", true);
+            }
+        }
+
+        static void getTextOnly(string filePath, string filePath1)
+        {
+            List<string> lines = new List<string>();
+            using(StreamReader sr = new StreamReader(filePath))
+            {
+                using(StreamWriter sw = new StreamWriter(filePath1))
+                {
+                    string line;
+
+                    while((line = sr.ReadLine()) != null)
+                    {
+                        if (line.Contains("text"))
+                        {
+                            if (line.Contains("textAngle"))
+                            {
+                                //do nothing
+                            }
+                            else
+                            {
+                                lines.Add(line);
+                                sw.WriteLine(line);
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -70,10 +100,11 @@ namespace ComputerVisonWebApp
                 // Display the JSON response.
                 MyTextBox.Text = JsonPrettyPrint(contentString);
                 string textFilePath = Path.ChangeExtension(Server.MapPath(@"~/images/") + fileName, ".txt");
+                string textFilePath1 = Server.MapPath(@"~/images/") + Path.GetFileNameWithoutExtension(textFilePath) + "text.txt";
                 File.WriteAllText(textFilePath, JsonPrettyPrint(contentString));
+                getTextOnly(textFilePath, textFilePath1);
             }
         }
-
 
         /// <summary>
         /// Returns the contents of the specified file as a byte array.
